@@ -3,7 +3,22 @@ variable "resource_group_location" {
   description = "Location of the resource group."
 }
 
-variable "resource_group_name_prefix" {
+variable "resource_group_name_suffix" {
   default     = "rg"
-  description = "Prefix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
+  description = "Suffix of the resource group name that's combined with a random ID so name is unique in your Azure subscription."
+}
+
+variable "storage_account_name" {
+  default = "jrpcvstorageaccount"
+  description = "Name of the storage account"
+}
+
+variable "app_service_name" {
+  default = "jrpcvappserviceplan"
+  description = "Name of the app service plan"
+}
+
+variable "function_app_name" {
+  default = "jrpcvfunctionapp"
+  description = "Name of the function app"
 }
