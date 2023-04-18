@@ -17,3 +17,17 @@ variable "app_service_name" {
   default = "jrpcvappserviceplan"
   description = "Name of the app service plan"
 }
+
+variable "function_app_name" {
+  default = "jrpcvfunctionapp"
+  description = "Name of the function app"
+}
+
+variable "tags" {
+  type = map
+  default = {
+    source = "Terraform"
+    deployment = "Terraform Cloud"
+    purpose = "Azure CV"
+  }
+}
