@@ -1,6 +1,7 @@
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
   name     = "jrpazurecv${var.resource_group_name_suffix}"
+  tags = var.tags
 }
 
 resource "azurerm_storage_account" "storage" {
@@ -10,10 +11,10 @@ resource "azurerm_storage_account" "storage" {
   location = var.resource_group_location
   name = var.storage_account_name
   resource_group_name = azurerm_resource_group.rg.name
-  
   static_website {
     index_document = "index.html"
   }
+  tags = var.tags
 }
 
 resource "azurerm_storage_blob" "index" {
@@ -23,7 +24,6 @@ resource "azurerm_storage_blob" "index" {
   type = "Block"
   content_type = "text/html"
   source = "index.html"
-  
 }
 
 resource "azurerm_app_service_plan" "appserviceplan" {
@@ -35,7 +35,7 @@ resource "azurerm_app_service_plan" "appserviceplan" {
     size = "Y1"
     tier = "Dynamic"
   }
-  
+  tags = var.tags
 }
 
 resource "azurerm_function_app" "functionapp" {
@@ -45,5 +45,5 @@ resource "azurerm_function_app" "functionapp" {
   location = azurerm_app_service_plan.appserviceplan.location
   name = var.function_app_name
   resource_group_name = azurerm_resource_group.rg.name
-  
+  tags = var.tags
 }
