@@ -54,7 +54,7 @@ resource "azurerm_cdn_endpoint" "endpoint" {
 resource "azurerm_cdn_endpoint_custom_domain" "domain" {
   cdn_endpoint_id = azurerm_cdn_endpoint.endpoint.id
   host_name = var.custom_domain
-  name = "jrpatterson"
+  name = var.custom_domain
   cdn_managed_https {
     certificate_type = "Shared"
     protocol_type = "ServerNameIndication"
