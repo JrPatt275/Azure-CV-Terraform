@@ -48,3 +48,8 @@ variable "tags" {
     purpose = "Azure CV"
   }
 }
+
+variable "database_name" {
+  default = "jrpcvcosmosdb"
+  description = "Name of the CosmosDB"
+}
