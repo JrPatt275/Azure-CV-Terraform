@@ -23,6 +23,11 @@ variable "function_app_name" {
   description = "Name of the function app"
 }
 
+variable "function_name" {
+  default = "jrpcvfunction"
+  description = "Name of the function"
+}
+
 variable "tags" {
   type = map
   default = {
