@@ -13,11 +13,23 @@ variable "storage_account_name" {
   description = "Name of the storage account"
 }
 
+variable "cdn_profile_name" {
+  default = "jrpcvcdnprofile"
+  description = "Name of the CDN profile"
+}
+
+variable "custom_domain" {
+  default = ""
+}
 variable "app_service_name" {
   default = "jrpcvappserviceplan"
   description = "Name of the app service plan"
 }
 
+variable "cdn_sku" {
+  default = "Standard_Verizon"
+  description = "SKU of the CDN Profile"
+}
 variable "function_app_name" {
   default = "jrpcvfunctionapp"
   description = "Name of the function app"
