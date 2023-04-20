@@ -110,6 +110,9 @@ resource "azurerm_cosmosdb_account" "cosmos" {
   capabilities {
     name = "EnableTable"
   }
+  capabilities {
+    name = "EnableServerless"
+  }
 }
 
 resource "azurerm_cosmosdb_table" "table" {
