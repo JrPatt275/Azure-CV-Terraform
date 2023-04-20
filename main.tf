@@ -85,6 +85,40 @@ resource "azurerm_windows_function_app" "functionapp" {
   tags = var.tags
 }
 
+resource "azurerm_cosmosdb_account" "cosmos" {
+  location = var.resource_group_location
+  name = var.database_name
+  offer_type = "Standard"
+  resource_group_name = azurerm_resource_group.rg.name
+  kind = "GlobalDocumentDB"
+  enable_automatic_failover = false
+  enable_free_tier = true
+  
+  consistency_policy {
+    consistency_level = "BoundedStaleness"
+    max_interval_in_seconds = 300
+    max_staleness_prefix = 100000
+  }
+  geo_location {
+    failover_priority = 0
+    location = var.resource_group_location
+  }
+  depends_on = [
+    azurerm_resource_group.rg
+  ]
+
+  capabilities {
+    name = "EnableTable"
+  }
+}
+
+resource "azurerm_cosmosdb_table" "table" {
+  account_name = azurerm_cosmosdb_account.cosmos.name
+  name = var.table_name
+  resource_group_name = azurerm_resource_group.rg.name
+  
+}
+
 resource "azurerm_function_app_function" "pythonfunction" {
   function_app_id = azurerm_windows_function_app.functionapp.id
   name = var.function_name
