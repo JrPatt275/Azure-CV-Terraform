@@ -19,7 +19,7 @@ variable "cdn_profile_name" {
 }
 
 variable "custom_domain" {
-  default = ""
+  type = string
 }
 variable "app_service_name" {
   default = "jrpcvappserviceplan"
@@ -27,7 +27,7 @@ variable "app_service_name" {
 }
 
 variable "cdn_sku" {
-  default = "Standard_Verizon"
+  default = "Standard_Microsoft"
   description = "SKU of the CDN Profile"
 }
 variable "function_app_name" {

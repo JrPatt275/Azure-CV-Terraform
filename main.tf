@@ -44,6 +44,7 @@ resource "azurerm_cdn_endpoint" "endpoint" {
   resource_group_name = azurerm_resource_group.rg.name
   origin_host_header = local.originurl
   is_https_allowed = true
+  is_http_allowed = false
   origin {
     host_name = local.originurl
     name = "jrpcvendpointorigin"
@@ -54,9 +55,9 @@ resource "azurerm_cdn_endpoint" "endpoint" {
 resource "azurerm_cdn_endpoint_custom_domain" "domain" {
   cdn_endpoint_id = azurerm_cdn_endpoint.endpoint.id
   host_name = var.custom_domain
-  name = var.custom_domain
+  name = "jrpcvcustomdomain"
   cdn_managed_https {
-    certificate_type = "Shared"
+    certificate_type = "Dedicated"
     protocol_type = "ServerNameIndication"
   }
   depends_on = [
