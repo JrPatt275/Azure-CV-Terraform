@@ -106,6 +106,10 @@ resource "azurerm_cosmosdb_account" "cosmos" {
   depends_on = [
     azurerm_resource_group.rg
   ]
+
+  capabilities {
+    name = "EnableTable"
+  }
 }
 
 resource "azurerm_cosmosdb_table" "table" {
