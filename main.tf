@@ -26,6 +26,45 @@ resource "azurerm_storage_blob" "index" {
   source = "index.html"
 }
 
+resource "azurerm_cdn_profile" "cdnprofile" {
+  location = "westeurope"
+  name = var.cdn_profile_name
+  resource_group_name = azurerm_resource_group.rg.name
+  sku = var.cdn_sku
+}
+
+locals {
+  temp = trimprefix(azurerm_storage_account.storage.primary_web_endpoint, "https://")
+  originurl = trimsuffix(local.temp, "/")
+}
+resource "azurerm_cdn_endpoint" "endpoint" {
+  location = "westeurope"
+  name = "jrpcvendpoint"
+  profile_name = azurerm_cdn_profile.cdnprofile.name
+  resource_group_name = azurerm_resource_group.rg.name
+  origin_host_header = local.originurl
+  is_https_allowed = true
+  is_http_allowed = false
+  origin {
+    host_name = local.originurl
+    name = "jrpcvendpointorigin"
+  }
+  
+}
+
+resource "azurerm_cdn_endpoint_custom_domain" "domain" {
+  cdn_endpoint_id = azurerm_cdn_endpoint.endpoint.id
+  host_name = var.custom_domain
+  name = "jrpcvcustomdomain"
+  cdn_managed_https {
+    certificate_type = "Dedicated"
+    protocol_type = "ServerNameIndication"
+  }
+  depends_on = [
+    azurerm_cdn_profile.cdnprofile,
+    azurerm_cdn_endpoint.endpoint
+  ]
+}
 resource "azurerm_service_plan" "appserviceplan" {
   location = var.resource_group_location
   name = var.app_service_name
