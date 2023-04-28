@@ -1,3 +1,6 @@
+data "azurerm_client_config" "current" {
+
+}
 resource "azurerm_resource_group" "rg" {
   location = var.resource_group_location
   name     = "jrpazurecv${var.resource_group_name_suffix}"
@@ -151,4 +154,12 @@ resource "azurerm_function_app_function" "pythonfunction" {
       },
     ]
   })
+}
+
+resource "azurerm_key_vault" "vault" {
+  location = var.resource_group_location
+  name = var.vault_name
+  resource_group_name = azurerm_resource_group.rg.name
+  sku_name = "standard"
+  tenant_id = data.azurerm_client_config.current.tenant_id
 }

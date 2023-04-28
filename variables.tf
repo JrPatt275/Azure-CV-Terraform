@@ -58,3 +58,8 @@ variable "table_name" {
   default = "jrpcvtable"
   description = "Name of the database table"
 }
+
+variable "vault_name" {
+  default = "jrpazurecvvault"
+  description = "Name of the key vault"
+}
