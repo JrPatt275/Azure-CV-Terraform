@@ -15,19 +15,19 @@ resource "azurerm_storage_account" "storage" {
   name = var.storage_account_name
   resource_group_name = azurerm_resource_group.rg.name
   static_website {
-    index_document = "index.html"
+    index_document = "Index.html"
   }
   tags = var.tags
 }
 
-resource "azurerm_storage_blob" "index" {
+/*resource "azurerm_storage_blob" "index" {
   name = "index.html"
   storage_account_name = azurerm_storage_account.storage.name
   storage_container_name = "$web"
   type = "Block"
   content_type = "text/html"
   source = "index.html"
-}
+}*/
 
 resource "azurerm_cdn_profile" "cdnprofile" {
   location = "westeurope"
